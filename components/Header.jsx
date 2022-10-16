@@ -11,7 +11,7 @@ const Header = () => {
 
         <>
 
-            <div className='sticky top-[0%]'>
+            <div className='sticky top-[0%] z-20'>
                 <nav class="bg-white   w-full shadow  ">
                     <div class="mx-auto px-8">
                         <div className='flex items-center justify-between h-16'>
