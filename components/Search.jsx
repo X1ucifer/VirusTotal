@@ -10,7 +10,7 @@ function Search() {
     const router = useRouter()
 
 
-    const [ipData, setIp] = useState("");
+    const [ipData, setIp] = useState("103.78.237.6");
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -32,7 +32,7 @@ function Search() {
                     <img src="./lo.png" ></img>
 
 
-                    <input type="text" required onChange={(e) => { setIp(e.target.value) }} placeholder='URL, IP address, domain' className='mt-[45px] block w-full px-3 py-2 bg-white border border-slate-500  text-sm text-black  placeholder-slate-500 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></input>
+                    <input type="text" required onChange={(e) => { setIp(e.target.value) }} value={ipData} placeholder='URL, IP address, domain' className='mt-[45px] block w-full px-3 py-2 bg-white border border-slate-500  text-sm text-black  placeholder-slate-500 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></input>
 
 
 

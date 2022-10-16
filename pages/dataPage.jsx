@@ -34,6 +34,8 @@ function dataPage() {
 
   const [apiData, setData] = useState()
 
+  const [tableData, setTable] = useState([])
+
   const [value, setValue] = useState('1');
 
   const handleChange = (event, newValue) => {
@@ -65,8 +67,24 @@ function dataPage() {
         console.error(error);
       });
 
+
+
   }, [])
-  console.log("-->", apiData && apiData.data.attributes.last_analysis_stats.harmless);
+
+  useEffect(() => {
+    setTable(apiData && apiData.data.attributes.last_analysis_results)
+
+  }, [apiData])
+
+  const result = tableData && Object.entries(tableData);
+
+  console.log("-->", apiData && apiData.data.id);
+
+  result && result.forEach(([key, value]) => {
+    console.log(key); // 'one'
+    console.log(value); // 1
+  });
+
 
   return (
 
@@ -75,7 +93,7 @@ function dataPage() {
 
       <div className="mt-[20px]">
 
-        <div className="flex justify-between">
+        <div className="flex justify-evenly">
 
           <div style={{ width: "100px", height: "100px", borderRadius: "50%", marginTop: "20px", position: "relative" }} className={apiData && apiData.data.attributes.last_analysis_stats.malicious == 0 ? "ml-[100px] bg-[#22B573]" : "ml-[100px] bg-[#EF274D] "} >
             <div style={{ backgroundColor: "white", height: "80px", position: "absolute", width: "80px", borderRadius: "50%", bottom: "10%", left: "10%", boxShadow: "0px 4px 47px -5px rgba(0,0,0,0.75)" }}>
@@ -137,8 +155,8 @@ function dataPage() {
             <div className="absolute bottom-[15%]">
 
               <div className="ml-[25px] mt-[30px]">
-                <p className="font-normal text-[12px]">https://www.netflix.com/</p>
-                <p className="font-normal text-[12px] mt-[5px]">netflix.com</p>
+                <p className="font-normal text-[12px]">{apiData && apiData.data.id}</p>
+                <p className="font-normal text-[12px] mt-[5px]">{apiData && apiData.data.id}</p>
               </div>
 
 
@@ -149,40 +167,71 @@ function dataPage() {
 
         <Container maxWidth="lg">
 
+
+
           <Box sx={{ width: '100%', typography: 'body1' }} className="mt-[30px]">
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="DETECTION" value="1" />
-                  <Tab label="Item Two" value="2" />
-                  <Tab label="Item Three" value="3" />
+                  <Tab label="DETAILS" value="2" />
+                  <Tab label="RELATIONS" value="3" />
                 </TabList>
               </Box>
+
               <TabPanel value="1">
+                <h1>Security Vendors' Analysis</h1>
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right"></TableCell>
+                        <TableCell align="right">Engine Name</TableCell>
+                        <TableCell align="right">Method</TableCell>
+                        {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.map((row) => (
+                      {tableData && Object.entries(tableData).map(([key, value]) => (
+                        // {
+                        //   tableData && Object.values(tableData).map((rows) => {}
+                        // }
                         <TableRow
-                          key={row.name}
+                          // key={row.name}
                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                           <TableCell component="th" scope="row">
-                            {row.name}
+                            {key}
                           </TableCell>
-                          <TableCell align="right">{row.calories}</TableCell>
-                          <TableCell align="right">{row.fat}</TableCell>
-                          <TableCell align="right">{row.carbs}</TableCell>
-                          <TableCell align="right">{row.protein}</TableCell>
+                          <TableCell align="right">{
+                            value.result && value.result == "clean" ? (
+                              <>
+                                <div className="flex">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#22B573]">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+
+                                  <h1 className="ml-[10px]">{value.result}</h1>
+                                </div>
+
+                              </>
+                            ) : (
+                              <>
+                                <div className="flex">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#EF274D]">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                  </svg>
+
+                                  <h1  className="ml-[10px]">{value.result}</h1>
+                                </div>
+
+                              </>
+                            )
+                          }</TableCell>
+                          <TableCell align="right">{value.engine_name}</TableCell>
+                          <TableCell align="right">{value.method}</TableCell>
+                          {/* <TableCell align="right">{row.category}</TableCell> */}
                         </TableRow>
                       ))}
                     </TableBody>
