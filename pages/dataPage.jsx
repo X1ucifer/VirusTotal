@@ -51,9 +51,9 @@ function dataPage() {
 
           </div>
 
-          <div className="w-[80%] h-[25vh] bg-[#FFFFFF] mr-[40px] mt-[10px] border-[1px] border-grey">
+          <div className="w-[80%] h-[25vh] bg-[#FFFFFF] mr-[40px] mt-[10px] border-[1px] border-grey relative">
 
-            <div className="w-[100%] h-[8vh] bg-[#F9FAFB]">
+            <div className="w-[100%] h-[8vh] bg-[#F9FAFB] absolute top-0">
 
               <div>
 
@@ -79,7 +79,7 @@ function dataPage() {
 
             {/* outside the box */}
 
-            <div>
+            <div className="absolute bottom-[15%]">
 
               <div className="ml-[25px] mt-[30px]">
                 <p className="font-normal text-[12px]">https://www.netflix.com/</p>
