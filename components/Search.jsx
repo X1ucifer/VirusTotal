@@ -10,39 +10,40 @@ function Search() {
     const router = useRouter()
 
 
-    const [ ipData, setIp ] = useState("");
+    const [ipData, setIp] = useState("");
 
-   const onSubmit = (e)=>{
-    e.preventDefault()
+    const onSubmit = (e) => {
+        e.preventDefault()
 
-    dispatch(addIp({
-        ip: ipData,
-    }))
+        dispatch(addIp({
+            ip: ipData,
+        }))
 
-    router.push('/dataPage')
-    console.log(ipData)
-   }
+        router.push('/dataPage')
+        console.log(ipData)
+    }
 
     return (
         <>
-       
-            <form onSubmit={onSubmit} className='absolute z-[9999] top-[45%] w-[40%] left-[29%] '>
+
+            <form onSubmit={onSubmit} className='absolute z-[9999] top-[25%] w-[40%] left-[29%] '>
                 <div className='relative'>
 
+                    <img src="./lo.png" ></img>
 
-                   
-                    <input type="text" required onChange={(e)=>{setIp(e.target.value)}} placeholder='URL, IP address, domain' className='mt-2 block w-full px-3 py-2 bg-white border border-slate-500  text-sm text-black  placeholder-slate-500 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></input>
 
-                   
+                    <input type="text" required onChange={(e) => { setIp(e.target.value) }} placeholder='URL, IP address, domain' className='mt-[45px] block w-full px-3 py-2 bg-white border border-slate-500  text-sm text-black  placeholder-slate-500 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></input>
 
-                   
+
+
+
                 </div>
             </form>
 
-           
+
         </>
     )
-    
+
 }
 
 export default Search

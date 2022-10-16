@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 
@@ -16,9 +17,12 @@ const Header = () => {
                         <div className='flex items-center justify-between h-16'>
 
                             <div>
-                                <h1 className='font-medium text-lg antialiased text-black'>
-                                    Total Scan
-                                </h1>
+                                <Link href="/">
+                                    <h1 className='font-medium text-lg antialiased text-black'>
+                                        Total Scan
+                                    </h1>
+                                </Link>
+
                             </div>
 
                             <div className='cursor-pointer border-2 py-1 px-3'>
