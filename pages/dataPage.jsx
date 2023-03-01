@@ -47,67 +47,14 @@ function dataPage() {
 
   const data = useSelector(store => store.data);
   // console.log("redux from list", JSON.stringify(Object.values(data.ip)))
-  console.log("redux from list", Object.values(data.ip).toString())
-
-  const options = {
-    method: 'GET',
-    url: `https://www.virustotal.com/api/v3/ip_addresses/${Object.values(data.ip).toString()}`,
-    headers: {
-      accept: 'application/json',
-      'x-apikey': 'dda14ef6e66cc6d5ccee35d29c55922d4f41c6172811addf3293dc700f9e672a'
-    }
-  };
-
-
-
+  console.log("redux from list", typeof(data.ip))
 
   useEffect(() => {
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("royal", response.data);
-        setData(response.data)
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-
+   setTable(data.ip)
 
 
   }, [])
 
-  useEffect(() => {
-    setTable(apiData && apiData.data.attributes.last_analysis_results)
-    shodanData()
-  }, [apiData])
-
-  const result = tableData && Object.entries(tableData);
-
-  console.log("-->", apiData && apiData.data.id);
-
-
-  // const s = shodan && Object.entries(shodan);
-
-  // s && s.forEach(([key, value]) => {
-  //   console.log(key); // 'one'
-  //   console.log(value); // 1
-  // });
-
-
-
-
-
-  const shodanData = async () => {
-    if (apiData && apiData.data.id) {
-      const { data } = await axios.get(`https://api.shodan.io/shodan/host/${apiData && apiData.data.id}?key=MuWfcU97yw8u9XP08ZsROsYTiny7Ibcx`)
-
-      setShodan(data)
-
-    }
-
-  }
-
-  console.log("make-->", shodan)
 
 
   return (
@@ -117,77 +64,7 @@ function dataPage() {
 
       <div className="mt-[20px]">
 
-        <div className="flex justify-evenly">
-
-          <div style={{ width: "100px", height: "100px", borderRadius: "50%", marginTop: "20px", position: "relative" }} className={apiData && apiData.data.attributes.last_analysis_stats.malicious == 0 ? "ml-[100px] bg-[#22B573]" : "ml-[100px] bg-[#EF274D] "} >
-            <div style={{ backgroundColor: "white", height: "80px", position: "absolute", width: "80px", borderRadius: "50%", bottom: "10%", left: "10%", boxShadow: "0px 4px 47px -5px rgba(0,0,0,0.75)" }}>
-
-              <h1 className={apiData && apiData.data.attributes.last_analysis_stats.malicious == 0 ? "absolute right-[35%] left-[35%] top-[1%] font-normal text-[40px] text-[#22B573]" : "absolute right-[35%] left-[35%] top-[1%] font-normal text-[40px] text-[#EF274D] "}>{apiData && apiData.data.attributes.last_analysis_stats.malicious}</h1>
-              <h1 className="absolute right-[35%] left-[35%] top-[65%] font-light text-[13px] text-[#0c0c0c]">/  {apiData && apiData.data.attributes.last_analysis_stats.harmless}</h1>
-            </div>
-
-          </div>
-
-          <div className="w-[80%] h-[25vh] bg-[#FFFFFF] mr-[40px] mt-[10px] border-[1px] border-grey relative">
-
-            <div className="w-[100%] h-[8vh] bg-[#F9FAFB] absolute top-0">
-
-              <div>
-
-                <div className="flex mt-[18px] ml-[20px]">
-                  {
-                    apiData && apiData.data.attributes.last_analysis_stats.malicious == 0 ?
-                      (
-                        <>
-                          <div >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#22B573]">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-
-
-
-                          <h1 className="text-[#22B573] ml-[10px] font-medium text-[15px]">No security vendors flagged this URL as malicious</h1>
-                        </>
-                      ) : (
-                        <>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#EF274D]">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                          </svg>
-
-
-
-
-                          <h1 className="text-[#EF274D] ml-[10px] font-medium text-[15px]">{apiData && apiData.data.attributes.last_analysis_stats.malicious} security vendors flagged this IP address as malicious</h1>
-                        </>
-
-
-                      )
-                  }
-
-                </div>
-
-
-              </div>
-
-
-
-            </div>
-
-            {/* outside the box */}
-
-            <div className="absolute bottom-[15%]">
-
-              <div className="ml-[25px] mt-[30px]">
-                <p className="font-normal text-[12px]">{apiData && apiData.data.id}</p>
-                <p className="font-normal text-[12px] mt-[5px]">{apiData && apiData.data.id}</p>
-              </div>
-
-
-
-            </div>
-          </div>
-        </div>
+      
 
         <Container maxWidth="lg">
 
