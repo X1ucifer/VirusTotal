@@ -47,13 +47,16 @@ function dataPage() {
 
   const data = useSelector(store => store.data);
   // console.log("redux from list", JSON.stringify(Object.values(data.ip)))
-  console.log("redux from list", typeof(data.ip))
+  console.log("redux from list", data.ip.ip)
 
   useEffect(() => {
-   setTable(data.ip)
+    setTable(data.ip.ip)
 
 
   }, [])
+
+  console.log("table", tableData)
+
 
 
 
@@ -64,7 +67,7 @@ function dataPage() {
 
       <div className="mt-[20px]">
 
-      
+
 
         <Container maxWidth="lg">
 
@@ -75,21 +78,21 @@ function dataPage() {
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="DETECTION" value="1" />
-                  <Tab label="DETAILS" value="2" />
+                  {/* <Tab label="DETAILS" value="2" /> */}
                   {/* <Tab label="RELATIONS" value="3" /> */}
                 </TabList>
               </Box>
 
               <TabPanel value="1">
-                <h1>Security Vendors' Analysis</h1>
+                {/* <h1>Security Vendors' Analysis</h1> */}
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                       <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell align="right"></TableCell>
-                        <TableCell align="right">Engine Name</TableCell>
-                        <TableCell align="right">Method</TableCell>
+                        <TableCell align="right">Detections</TableCell>
+                        <TableCell align="right">Autonomous System</TableCell>
                         {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
                       </TableRow>
                     </TableHead>
@@ -103,35 +106,15 @@ function dataPage() {
                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                           <TableCell component="th" scope="row">
-                            {key}
+                            <a href={`https://www.virustotal.com/gui/ip-address/${value.data.id}`} target="_blank"> {value.data.id} </a>
                           </TableCell>
-                          <TableCell align="right">{
-                            value.result && value.result == "clean" ? (
-                              <>
-                                <div className="flex">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#22B573]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
 
-                                  <h1 className="ml-[10px]">{value.result}</h1>
-                                </div>
+                          <TableCell align="right"></TableCell>
 
-                              </>
-                            ) : (
-                              <>
-                                <div className="flex">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-[#EF274D]">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                                  </svg>
+                          <TableCell align="right">{value.data.attributes.last_analysis_stats.malicious} / {value.data.attributes.last_analysis_stats.harmless + value.data.attributes.last_analysis_stats.malicious + value.data.attributes.last_analysis_stats.suspicious + value.data.attributes.last_analysis_stats.undetected}</TableCell>
 
-                                  <h1 className="ml-[10px]">{value.result}</h1>
-                                </div>
 
-                              </>
-                            )
-                          }</TableCell>
-                          <TableCell align="right">{value.engine_name}</TableCell>
-                          <TableCell align="right">{value.method}</TableCell>
+                          <TableCell align="right">{value.data.attributes.as_owner}</TableCell>
                           {/* <TableCell align="right">{row.category}</TableCell> */}
                         </TableRow>
                       ))}
@@ -139,43 +122,7 @@ function dataPage() {
                   </Table>
                 </TableContainer>
               </TabPanel>
-              <TabPanel value="2">
-                From Shodan
-
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                    <TableHead>
-                      <TableRow>
-                      <TableCell>Country_Code</TableCell>
-                        <TableCell align="right">region_code</TableCell>
-                        <TableCell align="right">City</TableCell>
-                        <TableCell align="right">Country Name</TableCell>
-                        <TableCell align="right">ISP</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                     
-                        <TableRow
-                          // key={row.name}
-                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {shodan && shodan.country_code}
-                          </TableCell>
-                          <TableCell align="right">{shodan && shodan.region_code}</TableCell>
-                          <TableCell align="right">{shodan && shodan.city}</TableCell>
-                          <TableCell align="right">{shodan && shodan.country_name}</TableCell>
-                          <TableCell align="right">{shodan && shodan.isp}</TableCell>
-                        </TableRow>
-                     
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-
-
-                
-              </TabPanel>
-              {/* <TabPanel value="3">Item Three</TabPanel> */}
+              
             </TabContext>
           </Box>
         </Container>

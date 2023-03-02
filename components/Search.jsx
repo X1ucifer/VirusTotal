@@ -12,7 +12,7 @@ function Search() {
     const router = useRouter()
 
 
-    const [ipData, setIp] = useState("23.129.64.222 209.141.54.195 104.192.3.74 185.246.188.74 37.120.155.18");
+    const [ipData, setIp] = useState("");
 
     const onSubmit = async(e) => {
         e.preventDefault()
