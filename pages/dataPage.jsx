@@ -32,12 +32,10 @@ const rows = [
 
 function dataPage() {
 
-  const [apiData, setData] = useState()
-
-
-  const [shodan, setShodan] = useState([]);
 
   const [tableData, setTable] = useState([]);
+  const [sorted, setSort] = useState([]);
+
 
   const [value, setValue] = useState('1');
 
@@ -55,9 +53,34 @@ function dataPage() {
 
   }, [])
 
-  console.log("table", tableData)
+  // console.log("table", tableData)
+
+  tableData && Object.entries(tableData).forEach(([key, value]) => {
+    console.log("without sort", value.data.attributes.last_analysis_stats.malicious)
+  
+
+  })
+
+  const maliciousData = [];
+
+    tableData && Object.entries(tableData)
+    .sort(([,a], [,b]) => a.data.attributes.last_analysis_stats.malicious - b.data.attributes.last_analysis_stats.malicious)
+    .forEach(([key, value]) => {
+      console.log("forloop", value)
+  
+      maliciousData.push(value)
+  
+     
+    });
 
 
+    // setSort(maliciousData)
+
+  // useEffect(() => {
+  
+    
+
+  // }, [])
 
 
   return (
@@ -66,6 +89,7 @@ function dataPage() {
       <Header></Header>
 
       <div className="mt-[20px]">
+
 
 
 
@@ -97,7 +121,7 @@ function dataPage() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {tableData && Object.entries(tableData).map(([key, value]) => (
+                      {tableData && Object.entries(maliciousData).map(([key, value]) => (
                         // {
                         //   tableData && Object.values(tableData).map((rows) => {}
                         // }
@@ -106,7 +130,7 @@ function dataPage() {
                           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                           <TableCell component="th" scope="row">
-                            <a href={`https://www.virustotal.com/gui/ip-address/${value.data.id}`} target="_blank"> {value.data.id} </a>
+                            <a href={`https://www.virustotal.com/gui/ip-address/${value.data.id}`} target="_blank" className='text-[#1C5DAB]'> {value.data.id} </a>
                           </TableCell>
 
                           <TableCell align="right"></TableCell>
