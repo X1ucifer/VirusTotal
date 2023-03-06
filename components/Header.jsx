@@ -19,16 +19,16 @@ const Header = () => {
                             <div>
                                 <Link href="/">
                                     <h1 className='font-medium text-lg antialiased text-black'>
-                                        Total Scan
+                                        Sophos
                                     </h1>
                                 </Link>
 
                             </div>
 
-                            <div className='cursor-pointer border-2 py-1 px-3'>
+                            {/* <div className='cursor-pointer border-2 py-1 px-3'>
                                 <h5 className=" font-semibold text-black text-sm " >Login</h5>
 
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </nav>

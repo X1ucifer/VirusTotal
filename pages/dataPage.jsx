@@ -16,6 +16,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import useClipboard from "react-use-clipboard";
+
+
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -33,8 +36,10 @@ const rows = [
 function dataPage() {
 
 
+
+
   const [tableData, setTable] = useState([]);
-  const [sorted, setSort] = useState([]);
+  // const [copy, setCopy] = useState([]);
 
 
   const [value, setValue] = useState('1');
@@ -55,32 +60,44 @@ function dataPage() {
 
   // console.log("table", tableData)
 
-  tableData && Object.entries(tableData).forEach(([key, value]) => {
-    console.log("without sort", value.data.attributes.last_analysis_stats.malicious)
+
   
 
-  })
+
 
   const maliciousData = [];
 
-    tableData && Object.entries(tableData)
-    .sort(([,a], [,b]) => a.data.attributes.last_analysis_stats.malicious - b.data.attributes.last_analysis_stats.malicious)
+  tableData && Object.entries(tableData)
+    .sort(([, a], [, b]) => b.data.attributes.last_analysis_stats.malicious - a.data.attributes.last_analysis_stats.malicious)
     .forEach(([key, value]) => {
-      console.log("forloop", value)
-  
+    
+
       maliciousData.push(value)
-  
-     
+
+
     });
 
 
-    // setSort(maliciousData)
+    const copy = [];
 
-  // useEffect(() => {
+
+    tableData && Object.entries(tableData).forEach(([key, value]) => {
   
-    
+      if(value.data.attributes.last_analysis_stats.malicious > 0){
+        // console.log("without sort", value.data.id)
+        copy.push(value.data.id)
 
-  // }, [])
+  
+      }
+  
+    })
+
+
+    const [isCopied, setCopied] = useClipboard(copy);
+
+
+      // console.log("table", copy)
+
 
 
   return (
@@ -107,7 +124,11 @@ function dataPage() {
                 </TabList>
               </Box>
 
-              <TabPanel value="1">
+              <button onClick={setCopied} className="absolute right-[14%] mt-[10px] mb-[20px] bg-[#1C5DAB] p-[10px] rounded-md text-cyan-50">
+                {isCopied ? "Copied" : " Copy to Clipboard"}
+              </button>
+
+              <TabPanel value="1" className='mt-[50px]'>
                 {/* <h1>Security Vendors' Analysis</h1> */}
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -146,7 +167,7 @@ function dataPage() {
                   </Table>
                 </TableContainer>
               </TabPanel>
-              
+
             </TabContext>
           </Box>
         </Container>

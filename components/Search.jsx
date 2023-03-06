@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 
+
 function Search() {
 
     const dispatch = useDispatch();
@@ -68,12 +69,12 @@ function Search() {
                             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                             open={open}
                         >
-                            <CircularProgress style={{color:"white"}} size={70} />
+                            <CircularProgress style={{color:"#1C5DAB"}} size={70} />
                         </Backdrop>
                     }
 
 
-                    <img src="./lo.png" ></img>
+                    <img src="./lo.png" className='w-[470px]  m-auto'></img>
 
 
                     <input type="text" required onChange={(e) => { setIp(e.target.value) }} value={ipData} placeholder='URL, IP address, domain' className='mt-[45px] block w-full px-3 py-2 bg-white border border-slate-500  text-sm text-black  placeholder-slate-500 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></input>
