@@ -10,6 +10,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
+import { toast } from "react-toastify";
+
 
 
 function Search() {
@@ -27,23 +29,37 @@ function Search() {
 
         try {
 
-            setIsLoading(true);
+            const ipAddresses = ipData.split(/[ ,]+/);
+            const invalidAddresses = ipAddresses.filter((address) => !/^([0-9]{1,3}\.){3}[0-9]{1,3}$/.test(address));
+            if (invalidAddresses.length === 0) {
 
-            const { data } = await axios.post(
-                `/api/ip`, {
 
-                ips: ipData
+                setIsLoading(true);
 
-            },
-            );
+                const { data } = await axios.post(
+                    `/api/ip`, {
 
-            dispatch(addIp({
-                ip: data,
-            }))
+                    ips: ipData
 
-            console.log(data)
+                },
+                );
 
-            router.push('/dataPage')
+                dispatch(addIp({
+                    ip: data,
+                }))
+
+                console.log(data)
+
+                router.push('/dataPage')
+
+                console.log("ip");
+
+            } else {
+
+                toast.error("IP is Invalid");
+            }
+
+
 
 
         } catch (err) {
@@ -69,7 +85,7 @@ function Search() {
                             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                             open={open}
                         >
-                            <CircularProgress style={{color:"#1C5DAB"}} size={70} />
+                            <CircularProgress style={{ color: "#1C5DAB" }} size={70} />
                         </Backdrop>
                     }
 
